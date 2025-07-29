@@ -1,0 +1,211 @@
+---
+name: Viridiana
+surname: Lizardo
+position: "Doctorado en Ciencias Biológicas, UNAM"
+address: "Ecóloga y Biogeógrafa Computacional"
+email: "lizardo.viridiana@gmail.com"
+github: ViridianaLizardo
+googlescholar: mIFIwsMAAAAJ
+orcid: 0000-0003-3958-3373
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+aboutme: "Ecóloga y biogeógrafa especializada en el estudio de gradientes espaciales y temporales de diversidad usando R. Experiencia en modelado de distribución de especies, manejo de grandes bases de datos y métodos filogenéticos comparativos. Actualmente me interesa el desarrollo de estrategias de conservación basadas en datos científicos"
+headcolor: 800080
+profilepic: "C:/Users/USER/Documents/GitHub/CV/CV/img/me_BW.jpg"
+output:
+  vitae::awesomecv:
+    page_total: true   
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readxl)
+library(glue)
+library(lubridate)
+library(scholar)
+library(rcrossref)
+library(vitae)
+
+# Cargar datos base
+readExcelSheets <- function(filename){
+  #read all sheets
+  all <- readxl::excel_sheets(filename)
+  
+  #import each sheet into a list
+  
+  list <- lapply(all, function(x) readxl::read_excel(filename, sheet = x))
+  
+  # save sheet name for each sheet (list)
+  names(list) <- all
+  
+  #breaks up list and creates a dataframe for each sheet with df names matching sheet names
+  list2env(list, envir = .GlobalEnv)
+}
+
+readExcelSheets('base.xlsx')
+
+# Google Scholar (opcional)
+scholar_id <- "mIFIwsMAAAAJ"
+scholar_pubs <- get_publications(scholar_id)
+perfil <- scholar::get_profile(scholar_id)
+```
+
+# Educación
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(purrr)
+library(dplyr)
+library(glue)
+
+Educacion <- Educacion %>%
+  mutate(
+    why = pmap(
+      list(Tesis, Asesor, Comité),  # Añade aquí todas las columnas extra
+      ~ {
+        items <- list(
+          if (!is.na(..1)) glue("Tesis: {..1}"),
+          if (!is.na(..2)) glue("Asesor: {..2}"),
+          if (!is.na(..3)) glue("Comité: {..3}")  # Nuevo campo
+        )
+        discard(items, is.null)  # Filtra elementos NA automáticamente
+      }
+    )
+  )
+
+# Genera el CV
+Educacion %>%
+  detailed_entries(
+    what = Institución,
+    when = glue("({Fecha_inicio}–{Fecha_fin})"),
+    with = Grado,
+    why = why
+  )
+```
+
+# Intereses Académicos
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+about %>%
+  filter(tipo == 'Intereses académicos') %>%
+  group_by(nombre) %>%
+  summarise(why = paste(why, collapse = ', ')) %>%
+  detailed_entries(
+    what = nombre,
+    why = why
+  )
+```
+
+# Habilidades
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+about %>%
+  filter(tipo == 'Habilidades') %>%
+  mutate( why = glue('{why} ({nivel})')) %>%
+  group_by(nombre) %>%
+  summarise(why = paste(why, collapse = ', ')) %>%
+  detailed_entries(
+    what = nombre,
+    why = why
+  )
+```
+
+# Experiencia
+
+```{=latex}
+{\small
+```
+
+## **Investigación**
+
+```{r, results='asis', echo=FALSE}
+Experiencia_Academica %>% 
+  arrange(desc(Fecha_inicio), Institución) %>%
+  mutate(salida = glue("* **{Institución}. ({Fecha_inicio}–{Fecha_fin}).** _{Puesto}_: {Descripción}")) %>%
+  pull(salida) %>%
+  cat(sep = "\n\n")
+```
+
+## **Docencia**
+
+```{r, results='asis', echo=FALSE}
+Docencia %>% 
+  arrange(desc(fecha)) %>%
+  mutate(salida = glue("* **{Curso} ({fecha}).** _{Nivel}._ {Institución}")) %>%  
+  pull(salida) %>% 
+  cat(sep = "\n\n")
+```
+
+## **Divulgación**
+
+```{r, results='asis', echo=FALSE}
+Divulgacion %>% 
+  arrange(desc(Fecha)) %>%
+  mutate(salida = glue("* **{Título} ({Fecha})** _{Actividad}_ {Descripción} {Lugar}.")) %>%
+  pull(salida) %>% 
+  cat(sep = "\n\n")
+```
+
+## **Participación en congresos**
+
+```{r echo=FALSE}
+charlas %>% detailed_entries(what = what,
+                               when = when, 
+                               with = with,
+                               where = where)%>%
+  arrange(desc(when))
+```
+
+# Publicaciones
+
+Publicaciones en revistas indexadas, con `r perfil$total_cites` citas acumuladas (índice h = `r perfil$h_index`). Participación en colaboraciones y desarrollo de productos de divulgación.
+
+```{r, results='asis', echo=FALSE}
+# Solo si quieres integrar Scholar automáticamente
+scholar_pubs %>% 
+  mutate(author = str_replace(author, 'V Lizardo', '**V Lizardo**')) %>%
+  arrange(desc(year)) %>%
+  filter(!pubid %in% c('hMod-77fHWUC','isC4tDSrTZIC', 'k_IJM867U9cC', 'u-x6o8ySG0sC')) %>%
+  mutate(salida = glue("* {author}, {year}. {title}. _{journal}_. {number}.  
+_Número de citas:_ {cites}")) %>%
+  pull(salida) %>%
+  cat(sep = "\n\n")
+```
+
+```{=latex}
+}
+```
+
+# Premios y Reconocimientos
+
+```{r, results='asis', echo=FALSE}
+becas %>% 
+  arrange(desc(when))  %>%
+  brief_entries(
+    glue::glue("{with}. {where}"),
+    when)
+
+```
+
+```{r eval=FALSE, include=FALSE, results='asis'}
+becas %>% 
+  arrange(desc(when)) %>%
+  mutate(salida = glue("- **{what}**:  {with}. {where}")) %>%
+  pull(salida) %>%
+  cat(sep = "\n")
+```
+
+```{=latex}
+{\small
+```
+
+# Referencias
+
+-   **Dr. Juan José Morrone Lupi.** Profesor. Museo de Zoología del Departamento de Biología Evolutiva, Facultad de Ciencia UNAM. _Contacto:_ [juanmorrone2001\@yahoo.com.mx](mailto:juanmorrone2001@yahoo.com.mx){.email}
+
+-   **Dr. Enrique Martínez-Meyer.** Investigador Titular C. Departamento de Zoología. Instituto de Biología, UNAM. _Contacto:_ [emm\@ib.unam.mx](mailto:emm@ib.unam.mx){.email}
+
+-   **Dra. Adriana Ruggiero.** Profesora. Universidad Nacional del Comahue, Instituto de Biodiversidad y Medio Ambiente (INIBIOMA - CONICET). _Contacto:_ [ruggieroa\@comahue-conicet.gob.ar](mailto:ruggieroa@comahue-conicet.gob.ar){.email}
+
+```{=latex}
+}
+```
