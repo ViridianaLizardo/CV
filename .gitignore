@@ -1,4 +1,19 @@
-.Rproj.user
+# R / RStudio
+.Rproj.user/
 .Rhistory
 .RData
-.Ruserdata
+# Quarto
+/.quarto/
+# Intermedios de vitae/LaTeX
+extenso/awesome-cv.cls
+extenso/fonts/
+*.tex
+*.log
+*.aux
+# Datos y PDFs con referencias (correos de terceros): nunca al repo
+privado/
+# Si no quieres publicar el flujo de PDFs, descomenta:
+# extenso/
+# hacer_pdfs.R
+
+**/*.quarto_ipynb

@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs          # GitHub Pages: Settings > Pages > Deploy from branch > main /docs
+  render:
+    - index.qmd             # solo la página; los PDFs se hacen aparte con hacer_pdfs.R
+  resources:
+    - "pdf/*.pdf"           # se copian tal cual a docs/pdf/
+
+lang: es
+
+website:
+  title: "CV · Viridiana Lizardo"
+  site-url: "https://viridianalizardo.github.io/CV/"
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+format:
+  html:
+    theme: [default, estilos.scss, cv.scss]
+    toc: false
+    include-in-header: _parciales/head.html
+    include-before-body: _parciales/cabecera.html
+    include-after-body: [_parciales/pie.html, _parciales/cv.html]

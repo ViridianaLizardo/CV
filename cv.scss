@@ -1,0 +1,9 @@
+/*-- scss:rules --*/
+// Estilos propios de la página CV (estilos.scss es copia del sitio principal; no lo edites aquí)
+.cv h2 { font-size: 24px; margin: 26px 0 10px; border: 0; padding: 0; }
+.cv h2:first-of-type { margin-top: 6px; }
+.cv ul { padding-left: 1.2em; }
+.cv li { margin-bottom: 6px; line-height: 1.5; }
+.cv .cuando { font-family: var(--px); color: var(--acc); white-space: nowrap; }
+.cv .descargas { margin: 4px 0 18px; }
+.cv a { overflow-wrap: anywhere; }

@@ -1,0 +1,74 @@
+---
+# Esta plantilla NO se teje con el botón Knit: la renderiza hacer_pdfs.R,
+# que le pasa `datos`, `lang` y `con_referencias`.
+name: Viridiana
+surname: Lizardo
+position: "`r filas(datos, 'perfil', lang)$titulo`"
+address: "`r filas(datos, 'perfil', lang)$lugar`"
+email: "lizardo.viridiana@gmail.com"
+www: "viridianalizardo.github.io"
+github: ViridianaLizardo
+orcid: 0000-0003-3958-3373
+googlescholar: mIFIwsMAAAAJ
+headcolor: 414141
+docname: "`r if (lang == 'es') 'Currículum vitae' else 'Curriculum vitae'`"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+output:
+  vitae::awesomecv:
+    page_total: true
+    keep_tex: false
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, results = "asis")
+library(vitae)
+library(tidyr)
+```
+
+```{r cuerpo}
+# Secciones de texto corto: una línea "Título: detalle"
+lista <- c("intereses", "habilidades", "idiomas")
+
+for (i in seq_len(nrow(datos$secciones))) {
+  s <- datos$secciones[i, ]
+  if (!s$pdf) next
+
+  pubs <- filter(datos$pubs, seccion == s$seccion) |> arrange(desc(anio))
+  cvs  <- filas(datos, s$seccion, lang)
+  if (nrow(pubs) + nrow(cvs) == 0) next          # sección vacía: no se imprime
+
+  cat("\n\n#", s[[lang]], "\n\n")
+
+  if (s$seccion == "perfil") {
+    cat(cvs$detalle[1], "\n")
+
+  } else if (nrow(pubs) > 0) {
+    cat(paste0("- ", cita(pubs), collapse = "\n"), "\n")
+
+  } else if (s$seccion %in% lista) {
+    cat(paste0("- **", cvs$titulo, ":** ", cvs$detalle, collapse = "\n"), "\n")
+
+  } else {
+    # "|" en detalle separa viñetas
+    cvs |>
+      mutate(cuando = fechas(inicio, fin, lang)) |>
+      separate_rows(detalle, sep = "\\s*\\|\\s*") |>
+      mutate(detalle = na_if(detalle, "")) |>
+      detailed_entries(what = institucion, when = cuando, with = titulo,
+                       where = lugar, why = detalle) |>
+      knitr::knit_print() |>
+      cat()
+  }
+}
+```
+
+```{r referencias}
+# Solo en la versión privada (con_referencias = TRUE en hacer_pdfs.R)
+if (con_referencias && file.exists(ruta_referencias)) {
+  r <- read.csv(ruta_referencias, encoding = "UTF-8")
+  cat("\n\n#", if (lang == "es") "Referencias" else "References", "\n\n")
+  cargo <- if (lang == "es") r$cargo_es else r$cargo_en
+  cat(paste0("- **", r$nombre, ".** ", cargo, ". ", r$institucion, ". ",
+             r$correo, collapse = "\n"), "\n")
+}
+```

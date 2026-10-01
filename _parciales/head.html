@@ -1,0 +1,12 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+<script>
+  // Aplica el modo guardado antes de pintar (evita el parpadeo claro→oscuro)
+  (function () {
+    var m = null;
+    try { m = localStorage.getItem("modo"); } catch (e) {}
+    if (!m) m = window.matchMedia("(prefers-color-scheme: dark)").matches ? "oscuro" : "claro";
+    document.documentElement.setAttribute("data-modo", m);
+  })();
+</script>

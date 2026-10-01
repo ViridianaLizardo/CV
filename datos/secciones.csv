@@ -1,0 +1,27 @@
+seccion,orden,es,en,cvu,pdf,web
+perfil,1,Perfil,Profile,Perfil,TRUE,TRUE
+contacto,2,Contacto,Contact,Medios de contacto / Identificadores,FALSE,FALSE
+formacion,3,Formación académica,Education,Trayectoria académica,TRUE,TRUE
+empleo,4,Experiencia profesional,Professional experience,Empleo actual,TRUE,TRUE
+investigacion,5,Proyectos y colaboraciones de investigación,Research projects and collaborations,Desarrollo institucional > Proyectos de investigación,TRUE,FALSE
+estancias,6,Estancias de investigación,Research stays,Estancias de investigación,TRUE,FALSE
+otra_experiencia,7,Otra experiencia académica,Other academic experience,(sin equivalente directo),TRUE,FALSE
+articulos,8,Artículos en revistas indexadas,Peer-reviewed articles,Producción humanista y científica > Artículos,TRUE,FALSE
+reportes,9,Reportes técnicos,Technical reports,Producción humanista y científica > Reportes,TRUE,FALSE
+informes,10,Informes,Project reports,Producción humanista y científica > Informes,TRUE,FALSE
+libros,11,Libros,Books,Divulgación > Publicaciones de divulgación > Libros,TRUE,FALSE
+pub_divulgacion,12,Artículos de divulgación,Popular science articles,Divulgación > Publicaciones de divulgación > Artículos,TRUE,FALSE
+propiedad_intelectual,13,Propiedad intelectual,Intellectual property,Producción tecnológica > Propiedad intelectual,TRUE,FALSE
+docencia,14,Docencia,Teaching,Fortalecimiento y consolidación de la comunidad > Docencia > Cursos / Talleres,TRUE,FALSE
+tutorias,15,Tutorías,Tutoring,Fortalecimiento y consolidación de la comunidad > Docencia > Tutorías,TRUE,FALSE
+tesis,16,Dirección y revisión de tesis,Thesis supervision and review,Fortalecimiento y consolidación de la comunidad > Trabajos de titulación,TRUE,FALSE
+planes_estudio,17,Diseño de planes de estudio,Curriculum design,Desarrollo institucional > Participación en planes de estudio,TRUE,FALSE
+dictaminacion,18,Evaluación y dictaminación,Peer review,Evaluaciones > Participación en dictaminación de publicaciones,TRUE,FALSE
+congresos,19,Participación en congresos,Conference presentations,Divulgación > Participación en congresos,TRUE,FALSE
+divulgacion,20,Divulgación de la ciencia,Science communication,"Divulgación > Eventos de comunicación / Audiovisuales, radiofónicos y digitales",TRUE,FALSE
+distinciones,21,Distinciones y premios,Honours and awards,Vinculación y distinciones > Distinciones y premios,TRUE,TRUE
+becas,22,Becas,Scholarships,Vinculación y distinciones > Distinciones y premios (tipo SECIHTI),TRUE,FALSE
+intereses,23,Líneas de investigación,Research interests,Líneas de investigación,TRUE,TRUE
+habilidades,24,Habilidades,Skills,Habilidades,TRUE,FALSE
+idiomas,25,Idiomas,Languages,Idiomas,TRUE,FALSE
+referencias,26,Referencias,References,(sin equivalente),FALSE,FALSE

@@ -1,0 +1,34 @@
+---
+title: "CV"
+pagetitle: "CV · Viridiana Lizardo"
+title-block-style: none
+---
+
+```{r}
+source("R/funciones.R")
+datos <- leer_datos()
+```
+
+::: {.titulo-seccion}
+# cv ✦
+Versión breve · short version
+:::
+
+::::: {.ventana .cv}
+<div class="ventana-barra"><span>curriculum.txt</span><span class="botoncitos" aria-hidden="true"><i></i><i></i><i></i></span></div>
+
+:::: {.ventana-cuerpo}
+<div class="idiomas" role="group" aria-label="Idioma / Language" data-idiomas><button type="button" data-lang="es" aria-pressed="true">español</button><button type="button" data-lang="en" aria-pressed="false">english</button></div>
+
+::: {.botonera .descargas}
+[CV-es ↓](pdf/CV-es.pdf){.boton .boton-pop download=""}
+[CV-en ↓](pdf/CV-en.pdf){.boton .boton-pop download=""}
+:::
+
+```{r}
+#| output: asis
+cat(cv_breve(datos, "es"), cv_breve(datos, "en"), sep = "\n")
+```
+
+::::
+:::::

@@ -1,0 +1,63 @@
+<footer class="pie">
+  <div class="botones-88">
+    <a class="b88 b88-acc" href="https://quarto.org">QUARTO ✦</a>
+    <a class="b88 b88-pop" href="/blog.xml">RSS ✉</a>
+    <a class="b88" href="https://viridianalizardo.github.io/ideas_escritura/">CUENTO.EXE</a>
+    <!-- Botones de amigues: <a class="b88" href="URL"><img src="/imagenes/boton-amigue.gif" alt="Nombre" width="88" height="31"></a> -->
+  </div>
+  <span class="actualizado">última actualización: <span id="fecha-actualizacion"></span></span>
+</footer>
+
+<script>
+(function () {
+  // El pie también sale del contenedor de Quarto
+  document.body.appendChild(document.querySelector(".pie"));
+
+  var raiz = document.documentElement;
+
+  // --- modo claro / oscuro ---
+  var boton = document.getElementById("boton-modo");
+  function pintarBoton() {
+    var oscuro = raiz.getAttribute("data-modo") === "oscuro";
+    boton.textContent = oscuro ? "☼ modo claro" : "☾ modo oscuro";
+    boton.setAttribute("aria-pressed", oscuro ? "true" : "false");
+  }
+  boton.addEventListener("click", function () {
+    var nuevo = raiz.getAttribute("data-modo") === "oscuro" ? "claro" : "oscuro";
+    raiz.setAttribute("data-modo", nuevo);
+    try { localStorage.setItem("modo", nuevo); } catch (e) {}
+    pintarBoton();
+  });
+  pintarBoton();
+
+  // --- sección activa en el menú ---
+  var ruta = location.pathname;
+  document.querySelectorAll(".menu a[data-rutas]").forEach(function (a) {
+    var rutas = a.getAttribute("data-rutas").split(",");
+    var activa = rutas.some(function (r) {
+      return r === "/" || r === "/index.html" ? (ruta === "/" || ruta === "/index.html") : ruta.indexOf(r) === 0;
+    });
+    if (activa) a.setAttribute("aria-current", "page");
+  });
+
+  // --- español / english ---
+  document.querySelectorAll("[data-idiomas]").forEach(function (grupo) {
+    var caja = grupo.closest(".ventana");
+    grupo.querySelectorAll("button[data-lang]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var lang = b.getAttribute("data-lang");
+        grupo.querySelectorAll("button").forEach(function (x) {
+          x.setAttribute("aria-pressed", x === b ? "true" : "false");
+        });
+        caja.querySelectorAll(".idioma").forEach(function (d) {
+          d.hidden = d.getAttribute("lang") !== lang;
+        });
+      });
+    });
+  });
+
+  // --- fecha de última actualización (la da GitHub Pages) ---
+  var f = document.getElementById("fecha-actualizacion");
+  if (f) f.textContent = new Date(document.lastModified).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
+})();
+</script>
