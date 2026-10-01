@@ -1,4 +1,4 @@
-seccion,anio,autores,titulo,fuente,volumen,paginas,doi,isbn,enlace,web
+﻿seccion,anio,autores,titulo,fuente,volumen,paginas,doi,isbn,enlace,web
 articulos,2026,"Lizardo, V., & Ruggiero, A.",Biogeographic boundaries and angiosperm phylogenetic endemism: Highlighting the evolutionary complexity of the South American Transition Zone,Journal of Biogeography,,,10.1111/jbi.70183,,,TRUE
 articulos,2025,"Lizardo, V., Ruggiero, A., & Morrone, J. J.",Patrones de riqueza de especies y conservadurismo filogenético del nicho ecológico en la Zona de Transición Mexicana: evidencia y herramientas para su estudio,Revista Mexicana de Biodiversidad,96,e965347,10.22201/ib.20078706e.2025.96.5347,,,TRUE
 articulos,2024,"Lizardo, V., Escobar, F., Martínez-Meyer, E., & Morrone, J. J.",Adaptive shifts in Phanaeini dung beetles of the Mexican plateau cenocron in the Mexican transition zone,Zoologica Scripta,,,10.1111/zsc.12656,,,TRUE
@@ -16,5 +16,5 @@ informes,2024,,Informe del proyecto estratégico institucional e-Scarab: la Scar
 informes,2023,,Primer informe del proyecto estratégico institucional e-Scarab: la Scarabaeoidea-fauna electrónica de México,Instituto de Ecología A.C. (INECOL),,,,,,FALSE
 libros,2023,"Lizardo, V.",Un librito de bichos: introducción para niños y niñas a la diversidad entomológica de la región del altiplano,Amonite,,,,978-607-99717-4-8,,TRUE
 pub_divulgacion,2023,"López Pérez, S., Vega Badillo, V., Núñez Monroy, A., Cifuentes Ruiz, P., Lizardo, V., & González Ramírez, M.","Mexicanas: nombrando, describiendo y clasificando la biodiversidad",Nextia,,,,,,FALSE
-libros,2026,"Lizardo, V.",Es Natural Cambiar: tres cuentos biol�gicos,Amonite,,,,978-607-26868-3-0,,TRUE
-libros,2026,"Hebzoariba H- G�mez, Viridiana Lizardo, Nara Pech",,,,,,978-970-96984-1-1,,TRUE
+libros,2026,"Lizardo, V.",Es Natural Cambiar: tres cuentos biológicos,Amonite,,,,978-607-26868-3-0,,TRUE
+libros,2026,"Hebzoariba H- Gómez, Viridiana Lizardo, Nara Pech",,,,,,978-970-96984-1-1,,TRUE

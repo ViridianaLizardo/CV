@@ -10,12 +10,18 @@ library(dplyr)
 leer_datos <- function(dir = "datos") {
   leer <- function(f) {
     ruta <- file.path(dir, f)
-    # Excel guarda "CSV (delimitado por comas)" en Windows-1252, no en UTF-8:
-    # si el archivo no es UTF-8 válido, se lee como Windows-1252.
-    utf8 <- all(validUTF8(readLines(ruta, warn = FALSE)))
-    if (!utf8) message("ℹ ", f, " no está en UTF-8; se lee como Windows-1252 (Excel).")
-    read_csv(ruta, col_types = cols(.default = "c"), na = character(),
-             locale = locale(encoding = if (utf8) "UTF-8" else "windows-1252")) |>
+    # Se lee línea por línea: las que no son UTF-8 (Excel guarda en Windows-1252)
+    # se convierten, sin estropear las que sí lo son.
+    x <- readLines(ruta, warn = FALSE, encoding = "UTF-8")
+    mal <- !validUTF8(x)
+    if (any(mal)) {
+      x[mal] <- iconv(x[mal], "windows-1252", "UTF-8")
+      message("ℹ ", f, ": líneas ", paste(which(mal), collapse = ", "),
+              " venían en Windows-1252; guarda el archivo como 'CSV UTF-8'.")
+    }
+    raro <- grep("Ã|Â|â€", x)
+    if (length(raro)) warning(f, ": texto dañado (Ã, Â…) en líneas ", paste(raro, collapse = ", "))
+    read_csv(I(x), col_types = cols(.default = "c"), na = character()) |>
       mutate(across(everything(), trimws))
   }
   logico <- function(x) tolower(x) %in% c("true", "sí", "si", "x", "1")
@@ -62,12 +68,15 @@ cita <- function(p, resaltar = "Lizardo, V.") {
   autores <- gsub(resaltar, paste0("**", resaltar, "**"), p$autores, fixed = TRUE)
   vol <- ifelse(p$volumen == "", "", paste0(", ", p$volumen))
   pag <- ifelse(p$paginas == "", "", paste0(", ", p$paginas))
-  id  <- ifelse(p$doi  != "", paste0(" <https://doi.org/", p$doi, ">"),
-         ifelse(p$isbn != "", paste0(" ISBN ", p$isbn),
-         ifelse(p$enlace != "", paste0(" <", p$enlace, ">"), "")))
+  id  <- ifelse(p$doi  != "", paste0("<https://doi.org/", p$doi, ">"),
+         ifelse(p$isbn != "", paste0("ISBN ", p$isbn),
+         ifelse(p$enlace != "", paste0("<", p$enlace, ">"), "")))
+  tit <- ifelse(p$titulo == "", "", paste0(p$titulo, ". "))
+  fue <- ifelse(p$fuente == "", "", paste0("*", p$fuente, "*", vol, pag, ". "))
   ifelse(autores == "",
-         paste0(p$titulo, " (", p$anio, "). *", p$fuente, "*", vol, pag, ".", id),
-         paste0(autores, " (", p$anio, "). ", p$titulo, ". *", p$fuente, "*", vol, pag, ".", id))
+         paste0(p$titulo, " (", p$anio, "). ", fue, id),
+         paste0(autores, " (", p$anio, "). ", tit, fue, id)) |>
+    trimws()
 }
 
 # Filas de una sección, en el idioma pedido y de lo más reciente a lo más antiguo

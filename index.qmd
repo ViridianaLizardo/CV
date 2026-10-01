@@ -21,8 +21,8 @@ Versión breve · short version
 <div class="idiomas" role="group" aria-label="Idioma / Language" data-idiomas><button type="button" data-lang="es" aria-pressed="true">español</button><button type="button" data-lang="en" aria-pressed="false">english</button></div>
 
 ::: {.botonera .descargas}
-[CV-es ↓](pdf/CV-es.pdf){.boton .boton-pop download=""}
-[CV-en ↓](pdf/CV-en.pdf){.boton .boton-pop download=""}
+[En Extenso - es ↓](pdf/CV-es.pdf){.boton .boton-pop download=""}
+[Full Version - en ↓](pdf/CV-en.pdf){.boton .boton-pop download=""}
 :::
 
 ```{r}

@@ -14,6 +14,14 @@ if (sincronizar_estilo) {
   }
 }
 
+# Los enlaces "/algo" del sitio principal se vuelven absolutos;
+# si no, Quarto los reescribe como ./algo y apuntan dentro de /CV/.
+for (f in c("_parciales/cabecera.html", "_parciales/pie.html")) {
+  x <- readLines(f, encoding = "UTF-8", warn = FALSE)
+  x <- gsub('href="/', 'href="https://viridianalizardo.github.io/', x, fixed = TRUE)
+  writeLines(x, f, useBytes = TRUE)
+}
+
 if (!all(file.exists(c("pdf/CV-es.pdf", "pdf/CV-en.pdf")))) {
   warning("Faltan los PDFs: corre primero source('hacer_pdfs.R') o los botones darán 404.")
 }
